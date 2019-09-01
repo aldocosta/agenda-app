@@ -15,6 +15,14 @@ module.exports = function(app){
             .then((data)=>{
                 res.status(200).json({a:data})
             })
+        },
+        cadastrar: (req, res) =>{
+            let User = app.server.models.user
+            let user = new User({email:'acs@acs.com',password:'123'})
+
+            user.save().then(data => console.log(data))
+
+            console.log(user)
         }
     }
 

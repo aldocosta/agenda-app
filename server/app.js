@@ -6,7 +6,6 @@ const consign = require('consign')
 const path = require('path');
 const http = require('http');
 
-
 const app = express()
 
 app.use(bodyParser.urlencoded({extended:false}))
@@ -14,10 +13,11 @@ app.use(bodyParser.json())
 
 app.use(express.static(path.join(__dirname, '../dist/agenda-app')));
 
-consign().include('server/controllers')
-         .then('server/routes')
+consign().include('server/config')
+         .then('server/controllers')
          .then('server/models')
-         .then('server/config').into(app)
+         .then('server/routes')         
+         .into(app)         
 
 // Catch all other routes and return the index file
 app.get('*', (req, res) => {
