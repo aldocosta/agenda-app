@@ -10,19 +10,30 @@ module.exports = function(app){
             })            
         },
         logar: (req,res)=>{
-            let crypto = app.config.cryptografia
-            crypto.verificarCripto('$2b$10$S4VeHk//B97bODDdf9.nPuyQw1O9pOC1aPcjwQrQRyKfwelu/E7W2','aldo')
-            .then((data)=>{
-                res.status(200).json({a:data})
+            let User = app.server.models.user
+            
+            let enc = User.decrypt(req.body.password).then
+            ((isOk)=>{
+                if(isOk){
+                    res.status(200).json({isOk:isOk})
+                }else{
+                    res.status(404).json({isOk:false})
+                }
             })
         },
         cadastrar: (req, res) =>{
             let User = app.server.models.user
-            let user = new User({email:'acs@acs.com',password:'123'})
-
-            user.save().then(data => console.log(data))
-
-            console.log(user)
+                
+            let user = new User()
+            user.email = req.body.email
+            User.encrypt(req.body.password).then((enc)=>{
+                user.password = enc         
+                user.save().then(data => {
+                    res.status(200).json({id:data._id})
+                }).catch((err) =>{
+                    res.status(404).json({error:err})
+                })               
+            })            
         }
     }
 
