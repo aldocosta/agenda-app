@@ -15,13 +15,8 @@ module.exports = function(app){
         return crypto.criptografar(val).then()        
     }
 
-    userSchema.statics.decrypt = (val)=>{
-       return  crypto.criptografar(val)
-        .then((data)=>{
-            return crypto.verificarCripto(data, val).
-            then()
-        })
-                      
+    userSchema.statics.decrypt = (hash,val)=>{  
+        return crypto.verificarCripto(hash, val).then()                      
     }
     
     return mongoose.model('User', userSchema)

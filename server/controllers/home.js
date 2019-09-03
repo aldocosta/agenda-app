@@ -12,14 +12,22 @@ module.exports = function(app){
         logar: (req,res)=>{
             let User = app.server.models.user
             
-            let enc = User.decrypt(req.body.password).then
-            ((isOk)=>{
-                if(isOk){
-                    res.status(200).json({isOk:isOk})
-                }else{
-                    res.status(404).json({isOk:false})
+            User.findOne({email:req.body.email},function(err, user)
+            {
+               if(err) res.status(500).json({error:err})
+               if(user){ 
+                   User.decrypt(user.password,req.body.password)
+                   .then((data)=>{
+                    if(data===true){
+                        res.status(200).json(true)
+                    }
+                    else{
+                        res.status(404).json(false)
+                    }
+                   })                
                 }
             })
+
         },
         cadastrar: (req, res) =>{
             let User = app.server.models.user
