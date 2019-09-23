@@ -5,15 +5,15 @@
         <mat-card-title>Acesso</mat-card-title>   
 <div class="example-container">
     <mat-form-field>
-        <input matInput placeholder="e-mail" type='text'>
+        <input matInput placeholder="e-mail" [(ngModel)]="user.email" type='text'>
     </mat-form-field>
             
     <mat-form-field>
-      <input matInput placeholder="password" type='password'>
+      <input matInput placeholder="password" [(ngModel)]="user.password" type='password'>
     </mat-form-field>
  </div>
  <mat-card-actions>
         <button mat-button>Login</button>
-        <button mat-button>Cadastrar</button>
+        <button mat-button  (click)="cadastrar(user)">Cadastrar</button>
       </mat-card-actions>
 </mat-card>

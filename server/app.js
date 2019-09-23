@@ -5,11 +5,13 @@ const bodyParser = require('body-parser')
 const consign = require('consign')
 const path = require('path');
 const http = require('http');
+const cors = require('cors')
 
 const app = express()
 
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
+app.use(cors())
 
 app.use(express.static(path.join(__dirname, '../dist/agenda-app')));
 
