@@ -8,14 +8,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngMaterialModule } from './ang-material.module';
 import { HomeComponent } from './views/home/home.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthGuard } from './auth.guard';
+import { AuthInterceptor } from './helpers/authinterceptor';
+import { Home2Component } from './views/home2/home2.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    Home2Component
   ],
   imports: [
     BrowserModule,
@@ -25,7 +28,12 @@ import { AuthGuard } from './auth.guard';
     HttpClientModule,
     AngMaterialModule
   ],
-  providers: [AuthGuard],
+  providers: [AuthGuard,
+  {
+    provide:HTTP_INTERCEPTORS,
+    useClass:AuthInterceptor,
+    multi:true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

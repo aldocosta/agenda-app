@@ -89,11 +89,33 @@ module.exports = function (app) {
                         res.status(400).json('Token Invalido')
                     }
                 })
-                .catch((err)=>{
+                .catch((err) => {
+                    res.status(400).json(err)
+                })
+        },
+        dosome: (req, res, next) => {
+            let token = app.server.config.token
+            let _token = req.headers["authorization"].split(" ")[1]
+            token.checkToken(_token)
+                .then((data) => {
+                    if (data) {
+                        res.status(200).json('ok')
+                    }
+                    else {
+                        res.status(400).json('Token Invalido')
+                    }
+                })
+                .catch((err) => {
                     res.status(400).json(err)
                 })
         }
+
     }
 
+
+    function verifyToken(token, req) {
+
+
+    }
     return HomeController;
 }

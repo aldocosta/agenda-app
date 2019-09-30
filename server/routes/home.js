@@ -7,4 +7,5 @@ module.exports = function(app){
     app.post('/logar', HomeController.logar)
     app.post('/cadastrar', HomeController.cadastrar)
     app.get('/checktoken', HomeController.verifyToken)
+    app.get('/some', HomeController.dosome)
 }
